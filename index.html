@@ -1,132 +1,64 @@
 <!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-		<title>CS498 DDV Final D3.js Visualization - Stanley Lee</title>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>CS498 DDV Final D3.js Visualization - Stanley Lee</title>
+	<meta name="author" content="Stanley Lee" />
+	<meta name="description" content="fullPage full-screen backgrounds." />
+	<meta name="keywords"  content="fullpage,jquery,demo,screen,fullscreen,backgrounds,full-screen" />
+	<meta name="Resource-type" content="Document" />
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="css/fullpage.css" /> -->
+	<link rel="stylesheet" type="text/css" href="css/slides.css" />
+	<link rel="stylesheet" type="text/css" href="css/bubble_chart.css" />
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="css/zoomable_sunburst.css" />
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
-
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
+	<!--[if IE]>
+		<script type="text/javascript">
+			 var console = { log: function() {} };
 		</script>
-		<script src="js/d3.min.js"></script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-				<section>
-					<section>
-						<div id="viz"></div>
-						<script type="text/javascript">
+	<![endif]-->
 
-						var sampleSVG = d3.select("#viz")
-							.append("svg")
-							.attr("width", 100)
-							.attr("height", 100);    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.fullPage.js"></script>
+	<script type="text/javascript" src="js/d3.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#fullpage').fullpage({
+				verticalCentered: false,
+				anchors: ['firstPage', 'secondPage', '3rdPage', '4th', '5th', '6th', '7th'],
+				navigation: true,
+				navigationPosition: 'right',
+				navigationTooltips: ['First page', 'Second page', 'Third page', 'Fourth page', '5 page', '6 page', '7 page']
+			});});
+	</script>
 
-						sampleSVG.append("circle")
-							.style("stroke", "gray")
-							.style("fill", "white")
-							.attr("r", 40)
-							.attr("cx", 50)
-							.attr("cy", 50)
-							.on("mouseover", function(){d3.select(this).style("fill", "aliceblue");})
-							.on("mouseout", function(){d3.select(this).style("fill", "white");});
-						</script>
-					</section>
-					<section id="graph">
-						<script type="text/javascript">
-							var diameter = 600,
-								format = d3.format(",d")
-								color = d3.scaleOrdinal(d3.schemeCategory20c);
-
-							var svg = d3.select('#graph').append('svg')
-											.attr('width', diameter)
-											.attr('height', diameter)
-											.attr("class", "bubble");
-										
-							d3.csv("data/yelp_academic_dataset_business-massaged.csv", function(data) {
-								console.log(data[0]);
-								var reviewsByState = d3.nest()
-									.key(function(d) { return d.State; })
-									.rollup(function(leaves) { return {"reviewsByState": d3.sum(leaves, function(d) {return parseFloat(d['Review Count']);})} })
-									.entries(data);
-								console.log(reviewsByState);
-								var reviewData = [];
-								reviewsByState.forEach(function(d) { 
-									reviewData.push({state: d.key, reviews: d.value['reviewsByState']});
-									// reviewData[d.key] = d.value['reviewsByState']; 
-									console.log(d.key, d.value['reviewsByState']);
-									});
-								console.log(reviewData);
-								dataset = {children:reviewData}
-								console.log(dataset);
-								
-								var bubble = d3.pack(dataset)
-									.size([diameter, diameter])
-									.padding(1.5);
-
-								var nodes = d3.hierarchy(dataset)
-									.sum(function(d) { return d.reviews; });
-
-								var node = svg.selectAll(".node")
-									.data(bubble(nodes).descendants())
-									.enter()
-									.filter(function(d){ return !d.children })
-									.append("g")
-									.attr("class", "node")
-									.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-								node.append("title")
-									.text(function(d) { return d.data.state + ": " + d.data.reviews; });
-
-								node.append("circle")
-									.attr("r", function(d) { return d.r; })
-									.style("fill", function(d) { return color(d.data.state); });
-
-								node.append("text")
-									.attr("dy", ".3em")
-									.style("text-anchor", "middle")
-									.style("font-size", function(d) { return d.r + "px"; })
-									.text(function(d) { return d.data.state; });
-
-								d3.select(self.frameElement)
-									.style("height", diameter + "px");
-								
-							});
-						</script>
-				</section>
-			</div>
+</head>
+<body>
+<div id="fullpage">
+	<div class="section" id="section0"></div>
+	<div class="section" id="section1"><h1>Slide Backgrounds</h1></div>
+	<div class="section" id="section2"><h1>Lovely images <br />for a lovely page</h1></div>
+	<div class="section" id="section3"><h1>One Image = One thousand words</h1></div>
+	<div class="section" id="section4">
+		<div id="toolbar">
+			<a href="#" id="all" class="button active">All Grants</a>
+			<a href="#" id="year" class="button">Grants By Year</a>
 		</div>
+		<div id="vis"></div>
+	</div>
+	<div class="section" id="section5"><div id="graph"></div></div> 
+	<div class="section" id="section6"><div id="zoomable_sunburst"></div></div>
+</div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+<script type="text/javascript" src="js/tooltip.js"></script>
+<script type="text/javascript" src="js/circle_chart.js"></script>
+<script type="text/javascript" src="js/poc.js"></script>
+<script type="text/javascript" src="js/bubble_chart.js"></script>
+<script type="text/javascript" src="js/zoomable_sunburst.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+</body>
 </html>

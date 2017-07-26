@@ -1,0 +1,65 @@
+/* Style for our header texts
+* --------------------------------------- */
+h1{
+	font-size: 5em;
+	font-family: arial,helvetica;
+	color: #fff;
+	margin:0;
+	padding:0;
+}
+
+/* Centered texts in each section
+* --------------------------------------- */
+.section{
+	text-align:center;
+}
+
+/* Overwriting styles for control arrows for slides
+* --------------------------------------- */
+.controlArrow.prev {
+	left: 50px;
+}
+.controlArrow.next{
+	right: 50px;
+}
+
+/* Backgrounds will cover all the section
+* --------------------------------------- */
+.section{
+	background-size: cover;
+}
+.slide{
+	background-size: cover;
+}
+
+/* Defining each section background and styles
+* --------------------------------------- */
+#section0{
+	background-image: url(../imgs/analytics.jpg);
+}
+#section0 h1{
+	top: 50%;
+	transform: translateY(-50%);
+	position: relative;
+}
+#section1{
+	background-image: url(../imgs/background_bw.jpg);
+	padding: 6% 0 0 0;
+}
+#section2{
+	background-image: url(../imgs/bg3.jpg);
+	padding: 6% 0 0 0;
+}
+#section3{
+	background-image: url(../imgs/bg4.jpg);
+	padding: 6% 0 0 0;
+}
+#section3 h1{
+	color: #000;
+}
+
+/* Bottom menu
+* --------------------------------------- */
+#infoMenu li a {
+	color: #fff;
+}
