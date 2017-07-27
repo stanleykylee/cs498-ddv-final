@@ -5,11 +5,13 @@
  * Organization and style inspired by:
  * https://bost.ocks.org/mike/chart/
  *
+ * Original script modied from:
+ * https://github.com/vlandham/bubble_chart_v4/
  */
 function bubbleChart() {
   // Constants for sizing
-  var width = 940;
-  var height = 600;
+  var width = 1024;
+  var height = 768;
 
   // tooltip for mouseover functionality
   var tooltip = floatingTooltip('gates_tooltip', 240);
@@ -18,18 +20,42 @@ function bubbleChart() {
   // on which view mode is selected.
   var center = { x: width / 2, y: height / 2 };
 
-  var yearCenters = {
-    2008: { x: width / 3, y: height / 2 },
-    2009: { x: width / 2, y: height / 2 },
-    2010: { x: 2 * width / 3, y: height / 2 }
-  };
+  var stateCenters = {
+    AZ: { x: 3 * width / 16, y: height / 3 },
+    IL: { x: width / 3, y: 2* height / 3 },
+    NC: { x: 3 * width / 8, y: height / 3 },
+    NV: { x: width / 2, y: 2* height / 3 },
+    OH: { x: 5 * width / 8, y: height / 3 },
+    PA: { x: 2 * width / 3, y: 2* height / 3 },
+    WI: { x: 13 * width / 16, y: height / 3 }
+  }
 
-  // X locations of the year titles.
-  var yearsTitleX = {
-    2008: 160,
-    2009: width / 2,
-    2010: width - 160
-  };
+  var starCenters = {
+    1: { x: width / 3, y: 2* height / 3 },
+    2: { x: 3 * width / 8, y: height / 3 },
+    3: { x: width / 2, y: 2* height / 3 },
+    4: { x: 5 * width / 8, y: height / 3 },
+    5: { x: 2 * width / 3, y: 2* height / 3 }
+  }
+
+  // X locations of the state titles.
+  var stateTitle = {
+    AZ: { x: width / 10, y: height / 8 },
+    IL: { x: 9 * width / 40, y: 9 * height / 20 },
+    NC: { x: 7 * width / 20, y: height / 8 },
+    NV: { x: width / 2, y: 9 * height / 20 },
+    OH: { x: 13 * width / 20, y: height / 8 },
+    PA: { x: 31 * width / 40, y: 9 * height / 20 },
+    WI: { x: 9 * width / 10, y: height / 8 }
+  }
+
+  var starTitle = {
+    1: { x: width / 5, y: 8 * height / 20 },
+    2: { x: 13 * width / 40, y: height / 9 },
+    3: { x: width / 2, y: 8 * height / 20 },
+    4: { x: 27 * width / 40, y: height / 9 },
+    5: { x: 4 * width / 5, y: 8 * height / 20 }
+  }
 
   // @v4 strength to apply to the position forces
   var forceStrength = 0.03;
@@ -39,20 +65,22 @@ function bubbleChart() {
   var bubbles = null;
   var nodes = [];
 
-  // Charge function that is called for each node.
-  // As part of the ManyBody force.
-  // This is what creates the repulsion between nodes.
-  //
-  // Charge is proportional to the diameter of the
-  // circle (which is stored in the radius attribute
-  // of the circle's associated data.
-  //
-  // This is done to allow for accurate collision
-  // detection with nodes of different sizes.
-  //
-  // Charge is negative because we want nodes to repel.
-  // @v4 Before the charge was a stand-alone attribute
-  //  of the force layout. Now we can use it as a separate force!
+  /*
+   * Charge function that is called for each node.
+   * As part of the ManyBody force.
+   * This is what creates the repulsion between nodes.
+   * 
+   * Charge is proportional to the diameter of the
+   * circle (which is stored in the radius attribute
+   * of the circle's associated data.
+   * 
+   * This is done to allow for accurate collision
+   * detection with nodes of different sizes.
+   * 
+   * Charge is negative because we want nodes to repel.
+   * @v4 Before the charge was a stand-alone attribute
+   *  of the force layout. Now we can use it as a separate force!
+   */
   function charge(d) {
     return -Math.pow(d.radius, 2.0) * forceStrength;
   }
@@ -73,10 +101,8 @@ function bubbleChart() {
 
   // Nice looking colors - no reason to buck the trend
   // @v4 scales now have a flattened naming scheme
-  var fillColor = d3.scaleOrdinal()
-    .domain(['low', 'medium', 'high'])
-    .range(['#d84b2a', '#beccae', '#7aa25c']);
-
+  var fillColor = d3.scaleOrdinal(d3.schemeCategory20c)
+    .domain(['AZ', 'IL', 'NC', 'NV', 'OH', 'PA', 'WI']);
 
   /*
    * This data manipulation function takes the raw data from
@@ -91,15 +117,15 @@ function bubbleChart() {
    * array for each element in the rawData input.
    */
   function createNodes(rawData) {
-    // Use the max total_amount in the data as the max in the scale's domain
-    // note we have to ensure the total_amount is a number.
-    var maxAmount = d3.max(rawData, function (d) { return +d.total_amount; });
+    // Use the max reviews in the data as the max in the scale's domain
+    // note we have to ensure the reviews is a number.
+    var maxAmount = d3.max(rawData, function (d) { return +d.reviews; });
 
     // Sizes bubbles based on area.
     // @v4: new flattened scale names.
     var radiusScale = d3.scalePow()
       .exponent(0.5)
-      .range([2, 85])
+      .range([2, 35])
       .domain([0, maxAmount]);
 
     // Use map() to convert raw data into node data.
@@ -108,20 +134,20 @@ function bubbleChart() {
     var myNodes = rawData.map(function (d) {
       return {
         id: d.id,
-        radius: radiusScale(+d.total_amount),
-        value: +d.total_amount,
-        name: d.grant_title,
-        org: d.organization,
-        group: d.group,
-        year: d.start_year,
+        radius: radiusScale(+d.reviews),
+        reviews: +d.reviews,
+        price: +d.price,
+        stars: +d.stars,
+        name: d.yelp_category,
+        state: d.state,
         x: Math.random() * 900,
         y: Math.random() * 800
       };
     });
 
     // sort them to prevent occlusion of smaller nodes.
-    myNodes.sort(function (a, b) { return b.value - a.value; });
-
+    myNodes.sort(function (a, b) { return b.reviews - a.reviews; });
+    
     return myNodes;
   }
 
@@ -144,13 +170,13 @@ function bubbleChart() {
 
     // Create a SVG element inside the provided selector
     // with desired size.
-    svg = d3.select(selector)
+    bubble_svg = d3.select(selector)
       .append('svg')
       .attr('width', width)
       .attr('height', height);
 
     // Bind nodes data to what will become DOM elements to represent them.
-    bubbles = svg.selectAll('.bubble')
+    bubbles = bubble_svg.selectAll('.bubble')
       .data(nodes, function (d) { return d.id; });
 
     // Create new circle elements each with class `bubble`.
@@ -161,8 +187,8 @@ function bubbleChart() {
     var bubblesE = bubbles.enter().append('circle')
       .classed('bubble', true)
       .attr('r', 0)
-      .attr('fill', function (d) { return fillColor(d.group); })
-      .attr('stroke', function (d) { return d3.rgb(fillColor(d.group)).darker(); })
+      .attr('fill', function (d) { return fillColor(d.state); })
+      .attr('stroke', function (d) { return d3.rgb(fillColor(d.state)).darker(); })
       .attr('stroke-width', 2)
       .on('mouseover', showDetail)
       .on('mouseout', hideDetail);
@@ -201,10 +227,21 @@ function bubbleChart() {
    * Provides a x value for each node to be used with the split by year
    * x force.
    */
-  function nodeYearPos(d) {
-    return yearCenters[d.year].x;
+  function nodeStatePosX(d) {
+    return stateCenters[d.state].x;
   }
 
+  function nodeStatePosY(d) {
+    return stateCenters[d.state].y;
+  }  
+
+  function nodeStarPosX(d) {
+    return starCenters[Math.floor(d.stars)].x;
+  }
+
+  function nodeStarPosY(d) {
+    return starCenters[Math.floor(d.stars)].y;
+  }  
 
   /*
    * Sets visualization in "single group mode".
@@ -213,15 +250,16 @@ function bubbleChart() {
    * center of the visualization.
    */
   function groupBubbles() {
-    hideYearTitles();
+    hideTitles('.state');
+    hideTitles('.stars');
 
-    // @v4 Reset the 'x' force to draw the bubbles to the center.
+    // @v4 Reset the 'x' and 'y' force to draw the bubbles to the center.
     simulation.force('x', d3.forceX().strength(forceStrength).x(center.x));
+    simulation.force('y', d3.forceY().strength(forceStrength).y(center.y));
 
     // @v4 We can reset the alpha value and restart the simulation
     simulation.alpha(1).restart();
   }
-
 
   /*
    * Sets visualization in "split by year mode".
@@ -229,11 +267,25 @@ function bubbleChart() {
    * tick function is set to move nodes to the
    * yearCenter of their data's year.
    */
-  function splitBubbles() {
-    showYearTitles();
+  function splitStateBubbles() {
+    hideTitles('.stars');
+    showTitles(stateTitle, 'state');
 
     // @v4 Reset the 'x' force to draw the bubbles to their year centers
-    simulation.force('x', d3.forceX().strength(forceStrength).x(nodeYearPos));
+    simulation.force('x', d3.forceX().strength(forceStrength).x(nodeStatePosX));
+    simulation.force('y', d3.forceY().strength(forceStrength).y(nodeStatePosY));
+
+    // @v4 We can reset the alpha value and restart the simulation
+    simulation.alpha(1).restart();
+  }
+
+  function splitStarBubbles() {
+    hideTitles('.state');
+    showTitles(starTitle, 'stars');
+    
+    // @v4 Reset the 'x' force to draw the bubbles to their year centers
+    simulation.force('x', d3.forceX().strength(forceStrength).x(nodeStarPosX));
+    simulation.force('y', d3.forceY().strength(forceStrength).y(nodeStarPosY));
 
     // @v4 We can reset the alpha value and restart the simulation
     simulation.alpha(1).restart();
@@ -242,28 +294,41 @@ function bubbleChart() {
   /*
    * Hides Year title displays.
    */
-  function hideYearTitles() {
-    svg.selectAll('.year').remove();
+  function hideTitles(title) {
+    bubble_svg.selectAll(title).remove();
   }
 
   /*
    * Shows Year title displays.
    */
-  function showYearTitles() {
+  function showTitles(title, titleClass) {
     // Another way to do this would be to create
     // the year texts once and then just hide them.
-    var yearsData = d3.keys(yearsTitleX);
-    var years = svg.selectAll('.year')
-      .data(yearsData);
+    var titleData = d3.keys(title);
+    var titles = bubble_svg.selectAll('.'+titleClass)
+      .data(titleData);
 
-    years.enter().append('text')
-      .attr('class', 'year')
-      .attr('x', function (d) { return yearsTitleX[d]; })
-      .attr('y', 40)
+    titles.enter().append('text')
+      .attr('class', titleClass)
+      .attr('x', function (d) { return title[d].x; })
+      .attr('y', function (d) { return title[d].y; })
       .attr('text-anchor', 'middle')
-      .text(function (d) { return d; });
+      .text(function (d) { 
+        if (d == 1) {
+          return '⭐';
+        } else if (d == 2) {
+          return '⭐⭐';
+        } else if (d == 3) {
+          return '⭐⭐⭐';
+        } else if (d == 4) {
+          return '⭐⭐⭐⭐';
+        } else if (d == 5) {
+          return '⭐⭐⭐⭐⭐';
+        } else {
+          return d; 
+        }
+      });
   }
-
 
   /*
    * Function called on mouseover to display the
@@ -273,14 +338,17 @@ function bubbleChart() {
     // change outline to indicate hover state.
     d3.select(this).attr('stroke', 'black');
 
-    var content = '<span class="name">Title: </span><span class="value">' +
+    var content = '<span class="name">Restaurant Category: </span><span class="value">' +
                   d.name +
                   '</span><br/>' +
-                  '<span class="name">Amount: </span><span class="value">$' +
-                  addCommas(d.value) +
+                  '<span class="name">State: </span><span class="value">' +
+                  d.state +
                   '</span><br/>' +
-                  '<span class="name">Year: </span><span class="value">' +
-                  d.year +
+                  '<span class="name">Reviews: </span><span class="value">' +
+                  addCommas(d.reviews) +
+                  '</span><br/>' +
+                  '<span class="name">Average Stars: </span><span class="value">' +
+                  d.stars +
                   '</span>';
 
     tooltip.showTooltip(content, d3.event);
@@ -292,7 +360,7 @@ function bubbleChart() {
   function hideDetail(d) {
     // reset outline
     d3.select(this)
-      .attr('stroke', d3.rgb(fillColor(d.group)).darker());
+      .attr('stroke', d3.rgb(fillColor(d.state)).darker());
 
     tooltip.hideTooltip();
   }
@@ -305,9 +373,11 @@ function bubbleChart() {
    * displayName is expected to be a string and either 'year' or 'all'.
    */
   chart.toggleDisplay = function (displayName) {
-    if (displayName === 'year') {
-      splitBubbles();
-    } else {
+    if (displayName === 'state') {
+      splitStateBubbles();
+    } else if (displayName === 'stars') {
+      splitStarBubbles();
+    }else {
       groupBubbles();
     }
   };
@@ -378,7 +448,7 @@ function addCommas(nStr) {
 }
 
 // Load the data.
-d3.csv('data/gates_money.csv', display);
+d3.csv('data/yelp_filtered_rolled.csv', display);
 
 // setup the buttons.
 setupButtons();
