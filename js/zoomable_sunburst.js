@@ -1,12 +1,12 @@
-var width = 960,
-    height = 700,
+var width = 1024,
+    height = 768,
     radius = (Math.min(width, height) / 2) - 10;
 var formatNumber = d3.format(",d");
 var x = d3.scaleLinear()
     .range([0, 2 * Math.PI]);
 var y = d3.scaleSqrt()
     .range([0, radius]);
-var color = d3.scaleOrdinal(d3.schemeCategory20);
+var color = d3.scaleOrdinal(d3.schemeCategory20c);
 var partition = d3.partition();
 var arc = d3.arc()
     .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x0))); })
@@ -18,11 +18,38 @@ var zsb_svg = d3.select("#zoomable_sunburst").append("svg")
     .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
-d3.json("https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json", function(error, root) {
+var yelp_tree = { "name":"Yelp Database","children":[] };
+
+d3.csv("data/yelp_filtered_v2.csv", function(error, data) {
     if (error) throw error;
-  
-    root = d3.hierarchy(root);
-    root.sum(function(d) { return d.size; });
+
+    data.forEach(function(d) {
+        // iterate through each row of csv data
+        var newcat = transverseTree(yelp_tree, d); // is this a new category? lets assume so & then correct
+
+        if (newcat) {
+            var yelp_category = {
+                "name":d.yelp_category,
+                "children": [
+                    {"name":"AZ","children":[]},
+                    {"name":"IL","children":[]},
+                    {"name":"NC","children":[]},
+                    {"name":"NV","children":[]},
+                    {"name":"OH","children":[]},
+                    {"name":"PA","children":[]},
+                    {"name":"WI","children":[]}
+                ]
+            };
+            yelp_tree.children[yelp_tree.children.length] = yelp_category;
+            transverseTree(yelp_tree, d);
+        }
+    });
+
+    root = d3.hierarchy(yelp_tree)
+        .sum(function (d) { return d.reviews; })
+        .sort(function(a, b) { return b.value - a.value; });
+
+    root.sum(function(d) { return d.reviews; });
     zsb_svg.selectAll("path")
         .data(partition(root).descendants())
         .enter().append("path")
@@ -32,16 +59,34 @@ d3.json("https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa
         .append("title")
         .text(function(d) { return d.data.name + "\n" + formatNumber(d.value); });
 });
+
 function click(d) {
   zsb_svg.transition()
     .duration(750)
     .tween("scale", function() {
-    var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
-        yd = d3.interpolate(y.domain(), [d.y0, 1]),
-        yr = d3.interpolate(y.range(), [d.y0 ? 20 : 0, radius]);
-    return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
+        var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
+            yd = d3.interpolate(y.domain(), [d.y0, 1]),
+            yr = d3.interpolate(y.range(), [d.y0 ? 20 : 0, radius]);
+        return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
     })
     .selectAll("path")
     .attrTween("d", function(d) { return function() { return arc(d); }; });
 }
+
+function transverseTree(tree, d) {
+    var newcat = true;
+    tree.children.forEach(function(child) {
+        if (child.name == d.yelp_category) {
+            child.children.forEach(function(grandchild) {
+                if(grandchild.name == d.state) {
+                    var yelp_restaurant = {"name":d.name,"reviews":d.reviews};
+                    grandchild.children.push(yelp_restaurant);
+                    newcat = false; // we matched the category so it's not new
+                }
+            })
+        }
+    });
+    if (newcat) { return true; } else { return false; }
+}
+
 d3.select(self.frameElement).style("height", height + "px");
