@@ -448,7 +448,7 @@ function addCommas(nStr) {
 }
 
 // Load the data.
-d3.csv('data/yelp_filtered_rolled.csv', display);
+d3.csv('data/bubble_chart.csv', display);
 
 // setup the buttons.
 setupButtons();

@@ -15,6 +15,7 @@ D3.js visualization for CS498 Data Visualization course final project
 + [https://www.pexels.com/photo/person-answering-test-paper-159353/](https://www.pexels.com/photo/person-answering-test-paper-159353/)
 + [https://www.pexels.com/photo/tea-coffee-restaurant-smartphone-481021/](https://www.pexels.com/photo/tea-coffee-restaurant-smartphone-481021/)
 + [https://www.pexels.com/photo/wood-texture-background-pine-82256/](https://www.pexels.com/photo/wood-texture-background-pine-82256/)
-## Zoomable Sunburst
+## Sunburst
 + [https://gist.github.com/mchelen/1481545d38d0304b4d54](https://gist.github.com/mchelen/1481545d38d0304b4d54)
 + [https://gist.github.com/mbostock/4348373](https://gist.github.com/mbostock/4348373)
++ [https://gist.github.com/denjn5/3b74baf5edc4ac93d5e487136481c601](https://gist.github.com/denjn5/3b74baf5edc4ac93d5e487136481c601)

@@ -6,7 +6,7 @@ var x = d3.scaleLinear()
     .range([0, 2 * Math.PI]);
 var y = d3.scaleSqrt()
     .range([0, radius]);
-var color = d3.scaleOrdinal(d3.schemeCategory20c);
+var color = d3.scaleOrdinal(d3.schemeCategory20);
 var partition = d3.partition();
 var arc = d3.arc()
     .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x0))); })
@@ -20,7 +20,7 @@ var zsb_svg = d3.select("#zoomable_sunburst").append("svg")
     .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
 var yelp_tree = { "name":"Yelp Database","children":[] };
 
-d3.csv("data/yelp_filtered_v2.csv", function(error, data) {
+d3.csv("data/zoomable_sunburst.csv", function(error, data) {
     if (error) throw error;
 
     data.forEach(function(d) {
