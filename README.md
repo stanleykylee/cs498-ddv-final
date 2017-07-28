@@ -19,3 +19,5 @@ D3.js visualization for CS498 Data Visualization course final project
 + [https://gist.github.com/mchelen/1481545d38d0304b4d54](https://gist.github.com/mchelen/1481545d38d0304b4d54)
 + [https://gist.github.com/mbostock/4348373](https://gist.github.com/mbostock/4348373)
 + [https://gist.github.com/denjn5/3b74baf5edc4ac93d5e487136481c601](https://gist.github.com/denjn5/3b74baf5edc4ac93d5e487136481c601)
+## Line Chart
++ [https://gist.github.com/DStruths/9c042e3a6b66048b5bd4](https://gist.github.com/DStruths/9c042e3a6b66048b5bd4)
