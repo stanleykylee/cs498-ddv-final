@@ -172,6 +172,7 @@ function bubbleChart() {
     // with desired size.
     bubble_svg = d3.select(selector)
       .append('svg')
+      .attr('id', 'bubble_svg')
       .attr('width', width)
       .attr('height', height);
 

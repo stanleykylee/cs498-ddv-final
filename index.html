@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="css/reset.css" />
 	<link rel="stylesheet" type="text/css" href="css/zoomable_sunburst.css" />
 	<link rel="stylesheet" type="text/css" href="css/linechart.css" />
-	<!-- <link rel="stylesheet" type="text/css" href="css/annotation.css" /> -->
+	<link rel="stylesheet" type="text/css" href="css/annotations.css" /> 
 
 	<!--[if IE]>
 		<script type="text/javascript">
@@ -48,7 +48,10 @@
 <body>
 <div id="fullpage">
 	<div class="section" id="section0"></div>
-	<div class="section" id="section1"><h1>Slide Backgrounds</h1></div>
+	<div class="section" id="section1"><svg width=960 height=500 id='annotation_svg'>
+      <text class="title" x=40 y=50>d3.annotation()</text>
+      <text x=40 y=80>Basic examples without scales</text>
+    </svg></div>
 	<div class="section" id="section2"><h1>Lovely images <br />for a lovely page</h1></div>
 	<div class="section" id="section3">
 		<div id="toolbar">
@@ -66,7 +69,7 @@
 <script type="text/javascript" src="js/bubble_chart.js"></script>
 <script type="text/javascript" src="js/zoomable_sunburst.js"></script> 
 <script type="text/javascript" src="js/linechart.js"></script>
-<!-- <script type="text/javascript" src="js/annotations.js"></script> -->
+<script type="text/javascript" src="js/annotations.js"></script> 
 
 </body>
 </html>

@@ -14,6 +14,7 @@ var arc = d3.arc()
     .innerRadius(function(d) { return Math.max(0, y(d.y0)); })
     .outerRadius(function(d) { return Math.max(0, y(d.y1)); });
 var zsb_svg = d3.select("#zoomable_sunburst").append("svg")
+    .attr('id', 'zoomable_svg')
     .attr("width", width)
     .attr("height", height)
     .append("g")

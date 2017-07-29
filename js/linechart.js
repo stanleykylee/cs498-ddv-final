@@ -190,6 +190,7 @@ d3v3.csv("data/linechart.csv", function(error, data) {
       .attr("x", width + (margin.right/3)) 
       .attr("y", function (d, i) { return (legendSpace)+i*(legendSpace); })  // (return (11.25/2 =) 5.625) + i * (5.625) 
       .text(function(d) { return d.name; }); 
+
   // Hover line 
   var hoverLineGroup = svg.append("g") 
             .attr("class", "hover-line");
