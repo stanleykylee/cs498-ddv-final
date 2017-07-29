@@ -10,11 +10,12 @@
 	<meta name="Resource-type" content="Document" />
 
 	<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
-	<!-- <link rel="stylesheet" type="text/css" href="css/fullpage.css" /> -->
 	<link rel="stylesheet" type="text/css" href="css/slides.css" />
 	<link rel="stylesheet" type="text/css" href="css/bubble_chart.css" />
 	<link rel="stylesheet" type="text/css" href="css/reset.css" />
 	<link rel="stylesheet" type="text/css" href="css/zoomable_sunburst.css" />
+	<link rel="stylesheet" type="text/css" href="css/linechart.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="css/annotation.css" /> -->
 
 	<!--[if IE]>
 		<script type="text/javascript">
@@ -22,9 +23,16 @@
 		</script>
 	<![endif]-->
 
+	<!-- import d3.v3 -->
+	<script src="js/d3.v3.js"></script>
+
+	<!-- import fullPage -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery.fullPage.js"></script>
+
+	<!-- import d3.v4 -->
 	<script type="text/javascript" src="js/d3.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/d3-annotation/1.12.1/d3-annotation.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#fullpage').fullpage({
@@ -42,8 +50,7 @@
 	<div class="section" id="section0"></div>
 	<div class="section" id="section1"><h1>Slide Backgrounds</h1></div>
 	<div class="section" id="section2"><h1>Lovely images <br />for a lovely page</h1></div>
-	<div class="section" id="section3"><textarea id="ex1" rows="15" cols="90"></textarea></div>
-	<div class="section" id="section4">
+	<div class="section" id="section3">
 		<div id="toolbar">
 			<a href="#" id="all" class="button active">All Reviews</a>
 			<a href="#" id="state" class="button">Reviews By State</a>
@@ -51,15 +58,15 @@
 		</div>
 		<div id="vis"></div>
 	</div>
-	<div class="section" id="section6"><div id="zoomable_sunburst"></div></div>
+	<div class="section" id="section4"><div id="zoomable_sunburst"></div></div>
+	<div class="section" id="section5"><div id="linechart"></div></div>
 </div>
 
 <script type="text/javascript" src="js/tooltip.js"></script>
-<script type="text/javascript" src="js/circle_chart.js"></script>
-<script type="text/javascript" src="js/poc.js"></script>
 <script type="text/javascript" src="js/bubble_chart.js"></script>
- <script type="text/javascript" src="js/zoomable_sunburst.js"></script> 
-<!-- <script type="text/javascript" src="js/zoomable_sunburst_nv.js"></script> -->
+<script type="text/javascript" src="js/zoomable_sunburst.js"></script> 
+<script type="text/javascript" src="js/linechart.js"></script>
+<!-- <script type="text/javascript" src="js/annotations.js"></script> -->
 
 </body>
 </html>
