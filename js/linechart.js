@@ -150,7 +150,7 @@ d3v3.csv("data/linechart.csv", function(error, data) {
         return d.visible ? line_color(d.name) : "#F1F1F2"; // If array key "visible" = true then color rect, if not then make it grey 
       })
       .attr("class", "legend-box")
-      .on("click", function(d){ // On click make d.visible 
+      .on("click", function(d){ // On click make d.visible     
         d.visible = !d.visible; // If array key for this data selection is "visible" = true then make it false, if false then make it true
         maxY = findMaxY(categories); // Find max Y rating value categories data with "visible"; true
         yScale.domain([0,maxY]); // Redefine yAxis domain based on highest y value of categories data with "visible"; true
@@ -261,6 +261,7 @@ d3v3.csv("data/linechart.csv", function(error, data) {
   //for brusher of the slider bar at the bottom
   function brushed() {
     xScale.domain(brush.empty() ? xScale2.domain() : brush.extent()); // If brush is empty then reset the Xscale domain to default, if not then make it the brush extent 
+    brush.empty() ? d3v3.select("#linechart_annotation").classed("hidden", false) : d3v3.select("#linechart_annotation").classed("hidden", true); // If brush is empty then reset the Xscale domain to default, if not then make it the brush extent 
     svg.select(".x.axis") // replot xAxis with transition when brush used
           .transition()
           .call(xAxis);

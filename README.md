@@ -5,6 +5,7 @@ D3.js visualization for CS498 Data Visualization course final project
 ## Bubble Chart
 + [stackoverflow question with example code](https://stackoverflow.com/questions/39368919/d3-bubble-chart-bubble-nodes-not-a-function) - [example code snippet](https://jsfiddle.net/r24e8xd7/9/)
 + [Bubble Chart d3 v4 Github Gist by John Alexis Guerra Gomez](https://bl.ocks.org/john-guerra/0d81ccfd24578d5d563c55e785b3b40a)
++ [Animated Bubble Chart by Jim Vallandingham](https://github.com/vlandham/bubble_chart_v4)
 + [d3 API documents on d3-hierarchy - packs](https://github.com/d3/d3-hierarchy/blob/master/README.md#pack)
 ## Geomapping
 + [Interactive Data Visualization for the Web - Chapter 12. Geomapping by Scott Murray](http://chimera.labs.oreilly.com/books/1230000000345/ch12.html)

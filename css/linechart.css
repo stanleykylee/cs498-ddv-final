@@ -62,9 +62,13 @@
   width: 70%;
 }
 #linechart_text {
-  margin: 30px; 
+  margin: 30px;
+  left: 5%;
+  padding: 10px;
   float: left;
   width: 20%;
+  background: rgb(204, 204, 204); /* Fallback for older browsers without RGBA-support */
+  background: rgba(255, 255, 255, 0.7);	  
 }
 #linechart {
   text-align:center;

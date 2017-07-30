@@ -1,35 +1,39 @@
-     /* body{
-        background-color: whitesmoke;
-     } */
+  /* body{
+    background-color: whitesmoke;
+  } */
 
-    :root {
-      --annotation-color: #E8336D;
-    }
+:root {
+  --annotation-color: #E8336D;
+}
 
-    #annotation_svg {
-        background-color: white;
-        font-family: 'Lato';
-     }
+#annotation_svg {
+    background-color: white;
+    font-family: 'Lato';
+  }
 
-    .annotation path {
-      stroke: var(--annotation-color);
-      fill: none;
-    }
+.annotation path {
+  stroke: var(--annotation-color);
+  fill: none;
+}
 
-    .annotation path.connector-arrow, 
-    .annotation path.connector-dot, 
-    .title text, .annotation text {
-      fill: var(--annotation-color);
-    }
+.annotation path.connector-arrow, 
+.annotation path.connector-dot, 
+.title text, .annotation text {
+  fill: var(--annotation-color);
+}
 
-    .annotation-note-bg {
-      fill: rgba(0, 0, 0, 0);
-    }
+.annotation-note-bg {
+  fill: rgba(0, 0, 0, 0);
+}
 
-    .annotation-note-title, text.title {
-      font-weight: bold;
-    }
+.annotation-note-title, text.title {
+  font-weight: bold;
+}
 
-    text.title {
-      font-size: 1.2em;
-    }
+text.title {
+  font-size: 1.2em;
+}
+
+.hidden {
+  display: none;
+}

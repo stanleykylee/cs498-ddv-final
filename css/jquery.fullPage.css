@@ -208,9 +208,9 @@ html.fp-enabled,
     -webkit-transition: opacity 0.2s ease-in;
     transition: opacity 0.2s ease-in;
     width: auto;
-    opacity: 1;
-    background-color: #ffffff;
-    border: 1px solid black;
+    opacity: 1; 
+    background: rgb(204, 204, 204); /* Fallback for older browsers without RGBA-support */
+    background: rgba(255, 255, 255, 0.6);	
     padding: 2px;
 }
 #fp-nav ul li .fp-tooltip.right {
