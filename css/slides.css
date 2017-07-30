@@ -1,18 +1,22 @@
 /* Style for our header texts
 * --------------------------------------- */
 h1{
-	font-size: 5em;
-	font-family: arial,helvetica;
-	color: #fff;
+	font-size: 4em;
+	font-family: 'Lato';
+	color: #000;
 	margin:0;
 	padding:0;
+}
+p{
+	margin: 0;
+	padding: 0;
 }
 
 /* Centered texts in each section
 * --------------------------------------- */
-.section{
+/* .section{
 	text-align:center;
-}
+} */
 
 /* Overwriting styles for control arrows for slides
 * --------------------------------------- */
@@ -34,32 +38,66 @@ h1{
 
 /* Defining each section background and styles
 * --------------------------------------- */
-#section0{
-	background-image: url(../imgs/analytics.jpg);
+#title{
+	background-image: url(../imgs/storefront.jpg);
 }
-#section0 h1{
-	top: 50%;
-	transform: translateY(-50%);
+#title_text{
+	top: 5%;
+	left: 10%;
 	position: relative;
 }
-#section1{
+#title_text h1,h3{
+	padding: 0;
+	margin: 0;
+}
+#analytics{
+	background-image: url(../imgs/analytics.jpg);
+}
+#analytics_div {
+    margin: 30px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    opacity: 0.6;
+    filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+#analytics_div p {
+    margin: 5%;
+    font-weight: bold;
+    color: #000000;
+}
+#background_bw{
 	background-image: url(../imgs/background_bw.jpg);
 	padding: 6% 0 0 0;
 }
-#section2{
-	background-image: url(../imgs/bg3.jpg);
+#survey{
+	background-image: url(../imgs/survey.jpg);
 	padding: 6% 0 0 0;
 }
-#section3{
-	background-image: url(../imgs/bg4.jpg);
+#survey_text{
+	top: 10%;
+	left: 10%;
+	position: relative;
+	/* text-align: left; */
+}
+#acks{
+	background-image: url(../imgs/table.jpg);
 	padding: 6% 0 0 0;
 }
-#section3 h1{
+#acks h1{
 	color: #000;
+}
+#acks_div {
+	margin: 50px;
+	padding: 10px;
+	top: 5%;
+    background-color: #ffffff;
+    border: 1px solid black;
+    opacity: 0.6;
+    filter: alpha(opacity=60); /* For IE8 and earlier */
 }
 
 /* Bottom menu
 * --------------------------------------- */
 #infoMenu li a {
-	color: #fff;
+	color: #000;
 }

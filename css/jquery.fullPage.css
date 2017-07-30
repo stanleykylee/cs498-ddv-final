@@ -192,7 +192,7 @@ html.fp-enabled,
 #fp-nav ul li .fp-tooltip {
     position: absolute;
     top: -2px;
-    color: #fff;
+    color: #000;
     font-size: 14px;
     font-family: arial, helvetica, sans-serif;
     white-space: nowrap;
@@ -209,6 +209,9 @@ html.fp-enabled,
     transition: opacity 0.2s ease-in;
     width: auto;
     opacity: 1;
+    background-color: #ffffff;
+    border: 1px solid black;
+    padding: 2px;
 }
 #fp-nav ul li .fp-tooltip.right {
     right: 20px;

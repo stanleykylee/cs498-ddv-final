@@ -12,7 +12,7 @@ var xScale = d3v3.time.scale()
 var yScale = d3v3.scale.linear()
     .range([height, 0]);
 // 40 Custom DDV colors 
-var color = d3v3.scale.ordinal().range(["#48A36D",  "#56AE7C",  "#64B98C", "#72C39B", "#80CEAA", "#80CCB3", "#7FC9BD", "#7FC7C6", "#7EC4CF", "#7FBBCF", "#7FB1CF", "#80A8CE", "#809ECE", "#8897CE", "#8F90CD", "#9788CD", "#9E81CC", "#AA81C5", "#B681BE", "#C280B7", "#CE80B0", "#D3779F", "#D76D8F", "#DC647E", "#E05A6D", "#E16167", "#E26962", "#E2705C", "#E37756", "#E38457", "#E39158", "#E29D58", "#E2AA59", "#E0B15B", "#DFB95C", "#DDC05E", "#DBC75F", "#E3CF6D", "#EAD67C", "#F2DE8A"]);  
+var line_color = d3v3.scale.ordinal().range(["#48A36D",  "#56AE7C",  "#64B98C", "#72C39B", "#80CEAA", "#80CCB3", "#7FC9BD", "#7FC7C6", "#7EC4CF", "#7FBBCF", "#7FB1CF", "#80A8CE", "#809ECE", "#8897CE", "#8F90CD", "#9788CD", "#9E81CC", "#AA81C5", "#B681BE", "#C280B7", "#CE80B0", "#D3779F", "#D76D8F", "#DC647E", "#E05A6D", "#E16167", "#E26962", "#E2705C", "#E37756", "#E38457", "#E39158", "#E29D58", "#E2AA59", "#E0B15B", "#DFB95C", "#DDC05E", "#DBC75F", "#E3CF6D", "#EAD67C", "#F2DE8A"]);  
 var xAxis = d3v3.svg.axis()
     .scale(xScale)
     .tickFormat(function(n){ return Math.round((n / 100 * 24) - 24) })
@@ -58,13 +58,13 @@ svg.append("defs")
     .attr("height", height); 
 //end slider part----------------------------------------------------------------------------------- 
 d3v3.csv("data/linechart.csv", function(error, data) { 
-  color.domain(d3v3.keys(data[0]).filter(function(key) { // Set the domain of the color ordinal scale to be all the csv headers except "date", matching a color to an issue
+  line_color.domain(d3v3.keys(data[0]).filter(function(key) { // Set the domain of the color ordinal scale to be all the csv headers except "date", matching a color to an issue
     return key !== "date"; 
   }));
   data.forEach(function(d) { // Make every date in the csv data a javascript date object format
     // d.date = parseDate(d.date);
   });
-  var categories = color.domain().map(function(name) { // Nest the data into an array of objects with new keys
+  var categories = line_color.domain().map(function(name) { // Nest the data into an array of objects with new keys
     return {
       name: name, // "name": the csv headers except date
       values: data.map(function(d) { // "values": which has an array of the dates and ratings
@@ -138,7 +138,7 @@ d3v3.csv("data/linechart.csv", function(error, data) {
         return d.visible ? line(d.values) : null; // If array key "visible" = true then draw line, if not then don't 
       })
       .attr("clip-path", "url(#clip)")//use clip path to make irrelevant part invisible
-      .style("stroke", function(d) { return color(d.name); });
+      .style("stroke", function(d) { return line_color(d.name); });
   // draw legend
   var legendSpace = 450 / categories.length; // 450/number of issues (ex. 40)    
   issue.append("rect")
@@ -147,7 +147,7 @@ d3v3.csv("data/linechart.csv", function(error, data) {
       .attr("x", width + (margin.right/3) - 15) 
       .attr("y", function (d, i) { return (legendSpace)+i*(legendSpace) - 8; })  // spacing
       .attr("fill",function(d) {
-        return d.visible ? color(d.name) : "#F1F1F2"; // If array key "visible" = true then color rect, if not then make it grey 
+        return d.visible ? line_color(d.name) : "#F1F1F2"; // If array key "visible" = true then color rect, if not then make it grey 
       })
       .attr("class", "legend-box")
       .on("click", function(d){ // On click make d.visible 
@@ -165,13 +165,13 @@ d3v3.csv("data/linechart.csv", function(error, data) {
         issue.select("rect")
           .transition()
           .attr("fill", function(d) {
-          return d.visible ? color(d.name) : "#F1F1F2";
+          return d.visible ? line_color(d.name) : "#F1F1F2";
         });
       })
       .on("mouseover", function(d){
         d3v3.select(this)
           .transition()
-          .attr("fill", function(d) { return color(d.name); });
+          .attr("fill", function(d) { return line_color(d.name); });
         d3v3.select("#line-" + d.name.replace(" ", "").replace("/", ""))
           .transition()
           .style("stroke-width", 2.5);  
@@ -180,7 +180,7 @@ d3v3.csv("data/linechart.csv", function(error, data) {
         d3v3.select(this)
           .transition()
           .attr("fill", function(d) {
-          return d.visible ? color(d.name) : "#F1F1F2";});
+          return d.visible ? line_color(d.name) : "#F1F1F2";});
         d3v3.select("#line-" + d.name.replace(" ", "").replace("/", ""))
           .transition()
           .style("stroke-width", 1.5);

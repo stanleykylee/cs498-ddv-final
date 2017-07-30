@@ -15,7 +15,9 @@
 	<link rel="stylesheet" type="text/css" href="css/reset.css" />
 	<link rel="stylesheet" type="text/css" href="css/zoomable_sunburst.css" />
 	<link rel="stylesheet" type="text/css" href="css/linechart.css" />
-	<link rel="stylesheet" type="text/css" href="css/annotations.css" /> 
+	<link rel="stylesheet" type="text/css" href="css/annotations.css" />
+
+	<link href='https://fonts.googleapis.com/css?family=Lato:300,900' rel='stylesheet' type='text/css'>
 
 	<!--[if IE]>
 		<script type="text/javascript">
@@ -37,23 +39,34 @@
 		$(document).ready(function() {
 			$('#fullpage').fullpage({
 				verticalCentered: false,
-				anchors: ['firstPage', 'secondPage', '3rdPage', '4th', '5th', '6th'],
+				anchors: ['intro', 'datavis', 'yelpdata', 'reviews', 'top25', 'checkins', 'ref'],
 				navigation: true,
 				navigationPosition: 'right',
-				navigationTooltips: ['First page', 'Second page', 'Third page', 'Fourth page', '5 page', '6 page']
+				navigationTooltips: ['Introduction', 'Data Visualization', 'Yelp Dataset', 'Reviews Overview', 'Top 25 Categories', 'NV Checkins', 'References']
 			});});
 	</script>
 
 </head>
 <body>
 <div id="fullpage">
-	<div class="section" id="section0"></div>
-	<div class="section" id="section1"><svg width=960 height=500 id='annotation_svg'>
-      <text class="title" x=40 y=50>d3.annotation()</text>
-      <text x=40 y=80>Basic examples without scales</text>
-    </svg></div>
-	<div class="section" id="section2"><h1>Lovely images <br />for a lovely page</h1></div>
-	<div class="section" id="section3">
+	<div class="section" id="title">
+		<div id="title_text">
+			<h1>Diving into the Restaunt Business</h1>
+			<h3>a d3.js data visualization project using the Yelp Academic dataset<br />Stanley Lee - UIUC CS498 Data Visualization</h3>
+		</div>
+	</div>
+	<div class="section" id="analytics">
+		<div id="analytics_div">
+			<p>This is some text that is placed in the transparent box.</p>
+		</div>
+	</div>
+	<div class="section" id="survey">
+		<div id="survey_text">
+			<h1>Analyzing Yelp Reviews</h1>
+			<p>some text</p>
+		</div>
+	</div>
+	<div class="section" id="background_bw">
 		<div id="toolbar">
 			<a href="#" id="all" class="button active">All Reviews</a>
 			<a href="#" id="state" class="button">Reviews By State</a>
@@ -61,8 +74,29 @@
 		</div>
 		<div id="vis"></div>
 	</div>
-	<div class="section" id="section4"><div id="zoomable_sunburst"></div></div>
-	<div class="section" id="section5"><div id="linechart"></div></div>
+	<div class="section" id="background_bw"><div id="zoomable_sunburst"></div></div>
+	<div class="section" id="background_bw">
+		<div id="linechart_title"><h1>Customer Checkins per Hour per Category</h1></div>
+		<div id="linechart_content">
+			<div id="linechart_text">
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+				Why do we use it?
+				It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+			</div>
+			<div id="linechart_container">
+				<div id="linechart"></div>
+			</div>
+		</div>
+	</div>
+	<div class="section" id="acks">
+		<div id="acks_div">
+			<h1>References and Resources</h1>
+			<h3>Links</h3>
+			<p>This is some text that is placed in the transparent box.</p>
+			<h3>Images</h3>
+			<p>This is some text that is placed in the transparent box.</p>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript" src="js/tooltip.js"></script>
