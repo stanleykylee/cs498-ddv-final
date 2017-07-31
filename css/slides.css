@@ -56,17 +56,17 @@ p {
 * --------------------------------------- */
 #about {
 	background-image: url(../imgs/about.jpg);
-	padding: 6% 6% 6% 6%;
+	padding: 3% 6% 6% 6%;
 }
 #background_bw {
 	background-image: url(../imgs/background_bw.jpg);
-	padding: 6% 0 0 0;
+	padding: 3% 0 0 0;
 }
 /* Yelp Data
 * --------------------------------------- */
 #survey{
 	background-image: url(../imgs/survey.jpg);
-	padding: 6% 60% 6% 6%;
+	padding: 3% 60% 6% 6%;
 }
 /* Reviews Overview
 * --------------------------------------- */
@@ -155,13 +155,13 @@ p {
 * --------------------------------------- */
 #analytics{
 	background-image: url(../imgs/analytics.jpg);
-	padding: 6% 60% 6% 6%;
+	padding: 3% 60% 6% 6%;
 }
 /* References
 * --------------------------------------- */
 #acks {
 	background-image: url(../imgs/table.jpg);
-	padding: 6% 52% 6% 6%;
+	padding: 3% 52% 6% 6%;
 }
 #content_div, #acks_div {
 	padding: 10px;
