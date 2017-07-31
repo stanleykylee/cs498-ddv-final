@@ -30,14 +30,14 @@ var line = d3v3.svg.line()
     .y(function(d) { return yScale(d.checkin); })
     .defined(function(d) { return d.checkin; });  // Hiding line value defaults of 0 for missing data
 var maxY; // Defined later to update yAxis
-var svg = d3v3.select("#linechart").append("svg")
+var line_svg = d3v3.select("#linechart").append("svg")
     .attr("id", "linechart_svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom) //height + margin.top + margin.bottom
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 // Create invisible rect for mouse tracking
-svg.append("rect")
+line_svg.append("rect")
     .attr("width", width)
     .attr("height", height)                                    
     .attr("x", 0) 
@@ -46,11 +46,11 @@ svg.append("rect")
     .style("fill", "white"); 
 //for slider part-----------------------------------------------------------------------------------
   
-var context = svg.append("g") // Brushing context box container
+var context = line_svg.append("g") // Brushing context box container
     .attr("transform", "translate(" + 0 + "," + 410 + ")")
     .attr("class", "context");
 //append clip path for lines plotted, hiding those part out of bounds
-svg.append("defs")
+line_svg.append("defs")
   .append("clipPath") 
     .attr("id", "clip")
     .append("rect")
@@ -110,11 +110,11 @@ d3v3.csv("data/linechart.csv", function(error, data) {
       .attr("fill", "#E6E7E8");  
   //end slider part-----------------------------------------------------------------------------------
   // draw line graph
-  svg.append("g")
+  line_svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
-  svg.append("g")
+  line_svg.append("g")
       .attr("class", "y axis")
       .call(yAxis)
     .append("text")
@@ -124,7 +124,7 @@ d3v3.csv("data/linechart.csv", function(error, data) {
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text("Category Checkins");
-  var issue = svg.selectAll(".issue")
+  var issue = line_svg.selectAll(".issue")
       .data(categories) // Select nested data and append to new svg group elements
     .enter().append("g")
       .attr("class", "issue");   
@@ -154,7 +154,7 @@ d3v3.csv("data/linechart.csv", function(error, data) {
         d.visible = !d.visible; // If array key for this data selection is "visible" = true then make it false, if false then make it true
         maxY = findMaxY(categories); // Find max Y rating value categories data with "visible"; true
         yScale.domain([0,maxY]); // Redefine yAxis domain based on highest y value of categories data with "visible"; true
-        svg.select(".y.axis")
+        line_svg.select(".y.axis")
           .transition()
           .call(yAxis);   
         issue.select("path")
@@ -192,7 +192,7 @@ d3v3.csv("data/linechart.csv", function(error, data) {
       .text(function(d) { return d.name; }); 
 
   // Hover line 
-  var hoverLineGroup = svg.append("g") 
+  var hoverLineGroup = line_svg.append("g") 
             .attr("class", "hover-line");
   var hoverLine = hoverLineGroup // Create line with basic attributes
         .append("line")
@@ -262,13 +262,13 @@ d3v3.csv("data/linechart.csv", function(error, data) {
   function brushed() {
     xScale.domain(brush.empty() ? xScale2.domain() : brush.extent()); // If brush is empty then reset the Xscale domain to default, if not then make it the brush extent 
     brush.empty() ? d3v3.select("#linechart_annotation").classed("hidden", false) : d3v3.select("#linechart_annotation").classed("hidden", true); // If brush is empty then reset the Xscale domain to default, if not then make it the brush extent 
-    svg.select(".x.axis") // replot xAxis with transition when brush used
+    line_svg.select(".x.axis") // replot xAxis with transition when brush used
           .transition()
           .call(xAxis);
     maxY = findMaxY(categories); // Find max Y rating value categories data with "visible"; true
     yScale.domain([0,maxY]); // Redefine yAxis domain based on highest y value of categories data with "visible"; true
     
-    svg.select(".y.axis") // Redraw yAxis
+    line_svg.select(".y.axis") // Redraw yAxis
       .transition()
       .call(yAxis);   
     issue.select("path") // Redraw lines based on brush xAxis scale and domain

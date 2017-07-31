@@ -20,6 +20,8 @@ var zsb_svg = d3.select("#zoomable_sunburst").append("svg")
     .append("g")
     .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
 var yelp_tree = { "name":"Yelp Database","children":[] };
+// tooltip for mouseover functionality
+var zsb_tooltip = floatingTooltip('zsb_tooltip', 240);
 
 d3.csv("data/zoomable_sunburst.csv", function(error, data) {
     if (error) throw error;
@@ -57,9 +59,33 @@ d3.csv("data/zoomable_sunburst.csv", function(error, data) {
         .attr("d", arc)
         .style("fill", function(d) { return zsb_color((d.children ? d : d.parent).data.name); })
         .on("click", click)
-        .append("title")
-        .text(function(d) { return d.data.name + "\n" + formatNumber(d.value); });
+        .on('mouseover', showZSBDetail)
+        .on('mouseout', hideZSBDetail);        
+        // .append("title")
+        // .text(function(d) { return d.data.name + "\n" + formatNumber(d.value); });
 });
+
+/*
+* Function called on mouseover to display the
+* details of a path in the tooltip.
+*/
+function showZSBDetail(d) {
+    var content = '<span class="name">Item: </span><span class="value">' +
+                    d.data.name +
+                    '</span><br/>' +
+                    '<span class="name">Reviews: </span><span class="value">' +
+                    d.value +
+                    '</span>';
+
+    zsb_tooltip.showTooltip(content, d3.event);
+}
+
+/*
+* Hides tooltip
+*/
+function hideZSBDetail(d) {
+    zsb_tooltip.hideTooltip();
+}
 
 function click(d) {
     d.parent == null ? d3v3.select("#zoom_annotation").classed("hidden", false) : d3v3.select("#zoom_annotation").classed("hidden", true);
