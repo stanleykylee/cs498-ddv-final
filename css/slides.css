@@ -1,13 +1,13 @@
 /* Style for our header texts
 * --------------------------------------- */
-h1{
+h1 {
 	font-size: 4em;
 	font-family: 'Lato';
 	color: #000;
 	margin:0;
 	padding:0;
 }
-p{
+p {
 	margin: 0;
 	padding: 0;
 }
@@ -23,72 +23,152 @@ p{
 .controlArrow.prev {
 	left: 50px;
 }
-.controlArrow.next{
+.controlArrow.next {
 	right: 50px;
 }
 
 /* Backgrounds will cover all the section
 * --------------------------------------- */
-.section{
+.section {
 	background-size: cover;
 }
-.slide{
+.slide {
 	background-size: cover;
 }
 
 /* Defining each section background and styles
 * --------------------------------------- */
-#title{
+/* Introduction
+* --------------------------------------- */
+#title {
 	background-image: url(../imgs/storefront.jpg);
 }
-#title_text{
+#title_text {
 	top: 5%;
 	left: 10%;
 	position: relative;
 }
-#title_text h1,h3{
+#title_text h1,h3 {
 	padding: 0;
 	margin: 0;
 }
-#analytics{
-	background-image: url(../imgs/analytics.jpg);
+/* About the Visualization
+* --------------------------------------- */
+#about {
+	background-image: url(../imgs/about.jpg);
+	padding: 6% 6% 6% 6%;
 }
-#analytics_div {
-    margin: 30px;
-    background-color: #ffffff;
-    border: 1px solid black;
-    opacity: 0.6;
-    filter: alpha(opacity=60); /* For IE8 and earlier */
-}
-#analytics_div p {
-    margin: 5%;
-    font-weight: bold;
-    color: #000000;
-}
-#background_bw{
+#background_bw {
 	background-image: url(../imgs/background_bw.jpg);
 	padding: 6% 0 0 0;
 }
+/* Yelp Data
+* --------------------------------------- */
 #survey{
 	background-image: url(../imgs/survey.jpg);
-	padding: 6% 0 0 0;
+	padding: 6% 60% 6% 6%;
 }
-#survey_text{
-	top: 10%;
-	left: 10%;
-	position: relative;
-	/* text-align: left; */
+/* Reviews Overview
+* --------------------------------------- */
+#bubble_title {
+  margin: 30px;
 }
-#acks{
+#bubble_content {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-55%);
+}
+#bubble_container {
+  width: 1024px;
+  height: 520px;
+  margin: 30px; 
+  float: left;
+  width: 70%;
+}
+#bubble_text {
+  margin: 30px;
+  left: 5%;
+  padding: 10px;
+  float: left;
+  width: 20%;
+  background: rgb(204, 204, 204); /* Fallback for older browsers without RGBA-support */
+  background: rgba(255, 255, 255, 0.7);	  
+}
+/* Top 25 Categories
+* --------------------------------------- */
+#zsb_title {
+  margin: 30px;
+}
+#zsb_content {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-55%);
+}
+#zsb_container {
+  width: 1024px;
+  height: 520px;
+  margin: 30px; 
+  float: left;
+  width: 70%;
+}
+#zsb_text {
+  margin: 30px;
+  left: 5%;
+  padding: 10px;
+  float: left;
+  width: 20%;
+  background: rgb(204, 204, 204); /* Fallback for older browsers without RGBA-support */
+  background: rgba(255, 255, 255, 0.7);	  
+}
+/* NV Check-ins
+* --------------------------------------- */
+#linechart {
+  text-align:center;
+}
+#linechart_title {
+  margin: 30px;
+}
+#linechart_content {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-55%);
+}
+#linechart_container {
+  width: 1024px;
+  height: 520px;
+  margin: 30px; 
+  background-color: #fff;
+  border: 1px solid black;
+  float: left;
+  width: 70%;
+}
+#linechart_text {
+  margin: 30px;
+  left: 5%;
+  padding: 10px;
+  float: left;
+  width: 20%;
+  background: rgb(204, 204, 204); /* Fallback for older browsers without RGBA-support */
+  background: rgba(255, 255, 255, 0.7);	  
+}
+/* Findings
+* --------------------------------------- */
+#analytics{
+	background-image: url(../imgs/analytics.jpg);
+	padding: 6% 60% 6% 6%;
+}
+/* References
+* --------------------------------------- */
+#acks {
 	background-image: url(../imgs/table.jpg);
-	padding: 6% 6% 6% 6%;
+	padding: 6% 52% 6% 6%;
 }
-#acks_div {
+#content_div, #acks_div {
 	padding: 10px;
     background: rgb(204, 204, 204); /* Fallback for older browsers without RGBA-support */
     background: rgba(255, 255, 255, 0.6);	
 }
-#acks_div h1,h2,h3,p {
+#content_div, #acks_div h1,h2,h3,p {
     font-weight: bold;
     color: #000;
 }
@@ -103,12 +183,14 @@ p{
 	box-shadow: inset 0 -4px 0 #ef8b80;
 	transition: background 0.1s cubic-bezier(.33,.66,.66,1);
 }
-
 #acks_div a:hover {
   	background: #ef8b80;
 } 
 
-
+#emphasize {
+	color: green;
+	font-style: bolder;
+}
 /* Bottom menu
 * --------------------------------------- */
 #infoMenu li a {

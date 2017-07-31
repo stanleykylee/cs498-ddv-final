@@ -1,4 +1,4 @@
-a, a:visited, a:active {
+#toolbar a, a:visited, a:active {
   color: #444;
 }
 
@@ -9,17 +9,19 @@ a, a:visited, a:active {
 
 .button {
   min-width: 130px;
-  padding: 4px 5px;
+  margin: 3px;
+  padding: 10px;
   cursor: pointer;
   text-align: center;
   font-size: 13px;
-  border: 1px solid #e0e0e0;
+  font-style: bold;
+  color: #fff;
   text-decoration: none;
+  background: #000;
 }
 
 .button.active {
-  background: #000;
-  color: #fff;
+  background: green;
 }
 
 

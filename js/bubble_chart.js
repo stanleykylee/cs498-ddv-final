@@ -254,6 +254,9 @@ function bubbleChart() {
     hideTitles('.state');
     hideTitles('.stars');
 
+    d3.selectAll("#bubble_state_annotation").remove()
+    d3.selectAll("#bubble_star_annotation").remove()    
+
     // @v4 Reset the 'x' and 'y' force to draw the bubbles to the center.
     simulation.force('x', d3.forceX().strength(forceStrength).x(center.x));
     simulation.force('y', d3.forceY().strength(forceStrength).y(center.y));
@@ -272,6 +275,13 @@ function bubbleChart() {
     hideTitles('.stars');
     showTitles(stateTitle, 'state');
 
+    d3.selectAll("#bubble_state_annotation").remove()
+    d3.selectAll("#bubble_star_annotation").remove()
+    d3.select("#bubble_svg").append("g")
+      .attr("class", "annotation-group")
+      .attr("id", "bubble_state_annotation")
+      .call(bubble_state_makeAnnotations)      
+
     // @v4 Reset the 'x' force to draw the bubbles to their year centers
     simulation.force('x', d3.forceX().strength(forceStrength).x(nodeStatePosX));
     simulation.force('y', d3.forceY().strength(forceStrength).y(nodeStatePosY));
@@ -283,6 +293,13 @@ function bubbleChart() {
   function splitStarBubbles() {
     hideTitles('.state');
     showTitles(starTitle, 'stars');
+
+    d3.selectAll("#bubble_state_annotation").remove()
+    d3.selectAll("#bubble_star_annotation").remove()
+    d3.select("#bubble_svg").append("g")
+      .attr("class", "annotation-group")
+      .attr("id", "bubble_star_annotation")
+      .call(bubble_star_makeAnnotations)    
     
     // @v4 Reset the 'x' force to draw the bubbles to their year centers
     simulation.force('x', d3.forceX().strength(forceStrength).x(nodeStarPosX));

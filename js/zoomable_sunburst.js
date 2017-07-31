@@ -62,16 +62,17 @@ d3.csv("data/zoomable_sunburst.csv", function(error, data) {
 });
 
 function click(d) {
-  zsb_svg.transition()
-    .duration(750)
-    .tween("scale", function() {
-        var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
-            yd = d3.interpolate(y.domain(), [d.y0, 1]),
-            yr = d3.interpolate(y.range(), [d.y0 ? 20 : 0, radius]);
-        return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
-    })
-    .selectAll("path")
-    .attrTween("d", function(d) { return function() { return arc(d); }; });
+    d.parent == null ? d3v3.select("#zoom_annotation").classed("hidden", false) : d3v3.select("#zoom_annotation").classed("hidden", true);
+    zsb_svg.transition()
+        .duration(750)
+        .tween("scale", function() {
+            var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
+                yd = d3.interpolate(y.domain(), [d.y0, 1]),
+                yr = d3.interpolate(y.range(), [d.y0 ? 20 : 0, radius]);
+            return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
+        })
+        .selectAll("path")
+        .attrTween("d", function(d) { return function() { return arc(d); }; });
 }
 
 function transverseTree(tree, d) {

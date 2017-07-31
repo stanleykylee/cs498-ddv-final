@@ -44,32 +44,3 @@
   stroke: #FFF;
   shape-rendering: crispEdges;
 }
-#linechart_title {
-  margin: 30px;
-}
-#linechart_content {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-40%);
-}
-#linechart_container {
-  width: 1024px;
-  height: 520px;
-  margin: 30px; 
-  background-color: #fff;
-  border: 1px solid black;
-  float: left;
-  width: 70%;
-}
-#linechart_text {
-  margin: 30px;
-  left: 5%;
-  padding: 10px;
-  float: left;
-  width: 20%;
-  background: rgb(204, 204, 204); /* Fallback for older browsers without RGBA-support */
-  background: rgba(255, 255, 255, 0.7);	  
-}
-#linechart {
-  text-align:center;
-}
